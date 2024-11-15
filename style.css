@@ -1,0 +1,156 @@
+
+body {
+    font-family: 'Rubik', sans-serif;
+    background-color: var(--tg-theme-bg-color);
+}
+
+p {
+    padding: 0;
+    margin: 0;
+}
+
+input {
+    caret-color: transparent; 
+}
+
+/* TEXT COLOR */
+.text_color {
+    color: var(--tg-theme-text-color);
+}
+
+.hint_color {
+    color: var(--tg-theme-hint-color);
+}
+
+.gold-color {
+    color: #F8A917;
+}
+
+/* BORDER COLOR */
+.gold-border {
+    border-color: #F8A917 !important;
+}
+
+/* FONT WEGHT */
+.fw-400 {
+    font-weight: 400;
+}
+
+/* FONT SIZE */
+.fs-12 {
+    font-size: 12px;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
+.fs-17 {
+    font-size: 17px;
+}
+
+.fs-24 {
+    font-size: 24px;
+}
+
+.first_currency {
+    background-color: var(--tg-theme-secondary-bg-color);
+}
+
+.second_currency {
+    background-color: var(--tg-theme-secondary-bg-color);
+    min-height: 100%;
+}
+
+.form-control,
+.form-control:autofill,
+.form-control:disabled,
+.form-control:active,
+.form-control:focus {
+    background-color:  var(--tg-theme-secondary-bg-color) !important;
+    border: none;
+    box-shadow: none;
+    color: var(--tg-theme-text-color);
+    font-size: 36px;
+}
+
+.btn-primary,
+.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:focus-visible {
+    background-color: var(--tg-theme-button-color) !important;
+    border-color: var(--tg-theme-button-color) !important;
+    box-shadow: none !important;
+}
+
+.btn-outline-primary,
+.btn-outline-primary:active,
+.btn-outline-primary:hover,
+.btn-outline-primary:focus,
+.btn-outline-primary:focus-visible {
+    border-color: var(--tg-theme-button-color) !important;
+    box-shadow: none !important;
+    color: var(--tg-theme-button-color) !important;
+    background-color: var(--tg-theme-bg-color) !important;
+}
+
+.btn-outline-secondary,
+.btn-outline-secondary:active,
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus,
+.btn-outline-secondary:focus-visible {
+    border-color: #4F6276;
+    box-shadow: none !important;
+    color: var(--tg-theme-text-color)!important;
+    background-color: var(--tg-theme-bg-color) !important;
+}
+
+.form-control::placeholder {
+    color: var(--tg-theme-hint-color);
+    font-size: 36px;
+}
+
+.first-currency {
+    user-select: none;
+    border-color: #4F6276!important;
+}
+
+.second-financial-card {
+    border-color: #4F6276!important;
+    user-select: none;
+}
+
+.offcanvas {
+    background-color: var(--tg-theme-bg-color);
+}
+
+.offcanvas.offcanvas-bottom {
+    height: 80%;
+}
+
+.swap-button {
+    background-color:  var(--tg-theme-bg-color);
+    top: -2rem;
+}
+
+.enabled-swap-button > i {
+    color: var(--tg-theme-button-color);
+}
+
+.disabled-swap-button > i {
+    color: var(--tg-theme-text-color);
+}
+
+.spinner-border-sm {
+    --bs-spinner-border-width: 0.1em !important;
+}
+
+.logo-mini {
+    width: 18px;
+    height: 18px;
+}
+
+.alert-row {
+    height: 18px;
+}

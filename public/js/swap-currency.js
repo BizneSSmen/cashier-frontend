@@ -31,7 +31,7 @@ async function handleSwapClick() {
     if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
     const data = await response.json();
-
+    console.log(data)
     loadFirstCurrency(secondCurrencyId);
     createSecondCurrencyField(data[0]);
   } catch (error) {

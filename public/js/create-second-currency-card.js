@@ -1,22 +1,32 @@
 function createSecondCurrencyCard(data) {
-  const { targetFinancial, courseExchange } = data;
+  const { targetFinancial, courseExchange, displayedCourseExchange } = data;
   const exchangeRate = parseFloat(courseExchange.exchangeRate).toFixed(3);
+  const displayedExchangeRate =  parseFloat(displayedCourseExchange.exchangeRate).toFixed(2);
   const initialAmount = (0.0).toLocaleString(undefined);
 
   const card = createElement(
     "div",
-    "second-financial-card border rounded-3 row d-flex justify-content-center py-2"
+    "second-financial-card border rounded-3 row d-flex justify-content-center py-2 mb-2"
   );
 
   const firstRow = createElement("div", "row p-0");
-  const logoHTML = `
+  const logoHTML =  exchangeRate < 1 ? `
       <div class="d-flex align-items-center">
       <img src="../../static/icons/${targetFinancial.currencyName}.svg" class="me-2 logo-mini"></img>
       <p class="hint_color fs-14">${targetFinancial.currencyName}</p>
       </div>
       <p class="hint_color fs-14">
-          1 ${courseExchange.secondCurrency.code} =
-          <span class="text-end gold-color">${exchangeRate} ${courseExchange.firstCurrency.name}</span>
+          1 ${courseExchange.targetCurrency.code} =
+          <span class="text-end gold-color">${displayedExchangeRate} ${courseExchange.sourceCurrency.name}</span>
+      </p>
+  ` : `
+      <div class="d-flex align-items-center">
+      <img src="../../static/icons/${targetFinancial.currencyName}.svg" class="me-2 logo-mini"></img>
+      <p class="hint_color fs-14">${targetFinancial.currencyName}</p>
+      </div>
+      <p class="hint_color fs-14">
+          1 ${courseExchange.sourceCurrency.code} =
+          <span class="text-end gold-color">${displayedExchangeRate} ${courseExchange.targetCurrency.name}</span>
       </p>
   `;
   firstRow.appendChild(
@@ -52,7 +62,7 @@ function createSecondCurrencyCard(data) {
   const updateFinancialData = (userAmount) => {
     const amountToDisplay =
       userAmount && !isNaN(userAmount)
-        ? (userAmount / courseExchange.exchangeRate).toLocaleString(undefined)
+        ? (userAmount * courseExchange.exchangeRate).toLocaleString(undefined)
         : "0.00";
     initialAmountP.textContent = amountToDisplay;
   };

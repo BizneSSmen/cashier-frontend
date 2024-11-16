@@ -1,7 +1,9 @@
 function createSecondCurrencyField(data) {
   currencyExchangeData = data;
-  const { courseExchange } = data;
+  console.log(data)
+  const { courseExchange,  displayedCourseExchange} = data;
   const exchangeRate = parseFloat(courseExchange.exchangeRate).toFixed(3);
+  const displayedCourseExchangeRate = parseFloat(displayedCourseExchange.exchangeRate).toFixed(3)
   const firstCurrencyAmount = document.getElementById("amount-input").value;
 
   const secondCurrencyHero = document.getElementById("second-currency-hero");
@@ -17,12 +19,17 @@ function createSecondCurrencyField(data) {
   card.setAttribute("financial-id", `${data.targetFinancial.id}`);
 
   const courseExchangeRow = createElement("div", "row p-0");
-  const courseExchangeRowHTML = `
+  const courseExchangeRowHTML = exchangeRate < 1 ? `
       <p class="hint_color fs-14">
-          1 ${courseExchange.secondCurrency.code} =
-          <span class="gold-color">${exchangeRate} ${courseExchange.firstCurrency.name}</span>
+          1 ${courseExchange.targetCurrency.code} =
+          <span class="gold-color">${displayedCourseExchangeRate} ${courseExchange.sourceCurrency.name}</span>
       </p>
-  `;
+  ` : `
+      <p class="hint_color fs-14">
+          1 ${courseExchange.sourceCurrency.code} =
+          <span class="gold-color">${displayedCourseExchangeRate} ${courseExchange.targetCurrency.name}</span>
+      </p>
+  ` ;
   courseExchangeRow.appendChild(
     createElement("div", "col ", courseExchangeRowHTML)
   );
@@ -58,7 +65,7 @@ function createSecondCurrencyField(data) {
       return;
     }
 
-    const valueToDisplay = userAmount / courseExchange.exchangeRate;
+    const valueToDisplay = userAmount * courseExchange.exchangeRate;
 
     checkLimits(userAmount);
 

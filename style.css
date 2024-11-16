@@ -132,10 +132,12 @@ input {
 .swap-button {
     background-color:  var(--tg-theme-bg-color);
     top: -2rem;
+    user-select: none;
 }
 
 .enabled-swap-button > i {
     color: var(--tg-theme-button-color);
+    user-select: none;
 }
 
 .disabled-swap-button > i {

@@ -22,6 +22,7 @@ document.getElementById("to-currencies").addEventListener("click", () => {
 });
 
 document.getElementById("send-data").addEventListener("click", async () => {
+  console.log(isReadyToExchange)
   if (isReadyToExchange) {
     try {
       const { currencyName: firstCurrencyName } =

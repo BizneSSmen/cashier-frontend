@@ -22,18 +22,24 @@ async function toggleSwapButton(enable) {
 
 async function handleSwapClick() {
   try {
-    const secondCurrencyId = document
+    const sourceCurrencyId = document
+      .getElementById("first-currency-card")
+      .getAttribute("financial-id");
+    const targetCurrencyId = document
       .getElementById("second-currency-card")
       .getAttribute("financial-id");
 
-    const response = await fetch(`${apiUrl}/exchange/${secondCurrencyId}`);
+    const response = await fetch(`${apiUrl}/exchange/${targetCurrencyId}`);
 
     if (!response.ok) throw new Error(`Error: ${response.statusText}`);
 
     const data = await response.json();
-    console.log(data)
-    loadFirstCurrency(secondCurrencyId);
-    createSecondCurrencyField(data[0]);
+    loadFirstCurrency(targetCurrencyId);
+    createSecondCurrencyField(
+      data.filter(
+        (currency) => currency.targetFinancial.id == sourceCurrencyId
+      )[0]
+    );
   } catch (error) {
     console.log(error);
   }

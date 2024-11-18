@@ -18,6 +18,13 @@ async function changeCurrency(currentCurrencyId, type) {
       card.addEventListener("click", () => {
         loadFirstAndSecondCurrency(item.id);
       });
+      card.addEventListener("click", () => {
+        setActiveButton(
+          document.getElementById("second-currency-group-all"),
+          currencyTypes,
+          "second-currency-group-"
+        );
+      });
       financialsContainer.appendChild(card);
     });
   } catch (error) {

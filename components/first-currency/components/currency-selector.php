@@ -1,4 +1,4 @@
-<div data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
+<div id="offcanvas-loader" data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom" aria-controls="offcanvasBottom">
   <div id="first-currency-container" class="container m-0 p-0">
   </div>
 </div>

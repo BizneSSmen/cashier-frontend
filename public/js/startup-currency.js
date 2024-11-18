@@ -9,7 +9,7 @@ async function loadFirstCurrency(id, type) {
     );
     firstCurrencyContainer.innerHTML = "";
 
-    const card = createCurrencyCard(data);
+    const card = createCurrencyCard(data, true);
     card.id = "first-currency-card";
     card.setAttribute("financial-id", `${data.id}`);
     card.addEventListener("click", () => changeCurrency(data.id, type));

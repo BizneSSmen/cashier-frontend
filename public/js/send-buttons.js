@@ -9,11 +9,14 @@ function toggleSendButtons(enable) {
   }
 }
 
-document.getElementById("to-currencies").addEventListener("click", () => {
+const backButton = document.getElementById("to-currencies");
+
+backButton.addEventListener("click", () => {
   isSecondCurrencySelected = false;
   currencyExchangeData = {};
   toggleSendButtons(false);
   toggleSwapButton(false);
+  toggleOffcanvas(true);
   toggleSecondCurrencyTypeButtons(true);
   const firstCurrencyId = document
     .getElementById("first-currency-card")
@@ -21,8 +24,15 @@ document.getElementById("to-currencies").addEventListener("click", () => {
   loadSecondCurrencies(firstCurrencyId);
 });
 
+backButton.addEventListener("click", () => {
+  setActiveButton(
+    document.getElementById("second-currency-group-all"),
+    currencyTypes,
+    "second-currency-group-"
+  );
+});
+
 document.getElementById("send-data").addEventListener("click", async () => {
-  console.log(isReadyToExchange)
   if (isReadyToExchange) {
     try {
       const { currencyName: firstCurrencyName } =
@@ -54,16 +64,14 @@ document.getElementById("send-data").addEventListener("click", async () => {
         },
         body: JSON.stringify(claimData),
       });
-
-      // Проверка, если запрос не удался
+      console.log(response);
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`Ошибка сервера: ${response.status} - ${errorText}`);
         return;
+      } else {
+        tgObject.close();
       }
-
-      const responseData = await response.json();
-      console.log("Ответ от сервера:", responseData);
     } catch (err) {
       console.error("Ошибка при отправке данных:", err);
     }

@@ -1,9 +1,21 @@
-function createSecondCurrencyField(data) {
+async function createSecondCurrencyField(data) {
+  const getCurrencyToRub = async (id) => {
+    const response = await fetch(`${apiUrl}/exchange/rub-currency/${id}`);
+    if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+    const data = await response.json();
+    return parseFloat(data.exchangeRate);
+  };
+
   currencyExchangeData = data;
-  console.log(data)
-  const { courseExchange,  displayedCourseExchange} = data;
+  const { courseExchange, displayedCourseExchange } = data;
   const exchangeRate = parseFloat(courseExchange.exchangeRate).toFixed(3);
-  const displayedCourseExchangeRate = parseFloat(displayedCourseExchange.exchangeRate).toFixed(3)
+  const displayedCourseExchangeRate = parseFloat(
+    displayedCourseExchange.exchangeRate
+  ).toFixed(3);
+  sourceCurrencyToRub = await getCurrencyToRub(courseExchange.sourceCurrencyId);
+  targetCurrencyToRub = await getCurrencyToRub(courseExchange.targetCurrencyId);
+  const lowerLimit = minimum / sourceCurrencyToRub;
+
   const firstCurrencyAmount = document.getElementById("amount-input").value;
 
   const secondCurrencyHero = document.getElementById("second-currency-hero");
@@ -19,17 +31,20 @@ function createSecondCurrencyField(data) {
   card.setAttribute("financial-id", `${data.targetFinancial.id}`);
 
   const courseExchangeRow = createElement("div", "row p-0");
-  const courseExchangeRowHTML = exchangeRate < 1 ? `
+  const courseExchangeRowHTML =
+    exchangeRate < 1
+      ? `
       <p class="hint_color fs-14">
           1 ${courseExchange.targetCurrency.code} =
           <span class="gold-color">${displayedCourseExchangeRate} ${courseExchange.sourceCurrency.name}</span>
       </p>
-  ` : `
+  `
+      : `
       <p class="hint_color fs-14">
           1 ${courseExchange.sourceCurrency.code} =
           <span class="gold-color">${displayedCourseExchangeRate} ${courseExchange.targetCurrency.name}</span>
       </p>
-  ` ;
+  `;
   courseExchangeRow.appendChild(
     createElement("div", "col ", courseExchangeRowHTML)
   );
@@ -45,6 +60,7 @@ function createSecondCurrencyField(data) {
   secondCurrencyInput.inputMode = "numeric";
   secondCurrencyInput.className = "form-control text-center m-0 p-0";
   secondCurrencyInput.placeholder = "0.0";
+  secondCurrencyInput.setAttribute("autocomplete", "off");
   updateInput(firstCurrencyAmount);
   secondCurrencyInputRow.appendChild(secondCurrencyInput);
 
@@ -65,7 +81,10 @@ function createSecondCurrencyField(data) {
       return;
     }
 
-    const valueToDisplay = userAmount * courseExchange.exchangeRate;
+    const valueWithoutFee = userAmount * courseExchange.exchangeRate;
+    const rubledAmount = sourceCurrencyToRub * userAmount;
+    const valueToDisplay =
+      valueWithoutFee - valueWithoutFee * (getFee(rubledAmount) / 100);
 
     checkLimits(userAmount);
 
@@ -79,10 +98,13 @@ function createSecondCurrencyField(data) {
     event.target.value = filteredValue;
     const firstCurrencyInput = document.getElementById("amount-input");
     if (event.target.value && !isNaN(event.target.value)) {
-      const valueToDisplay = event.target.value * courseExchange.exchangeRate;
+      const valueWithoutFee = event.target.value / courseExchange.exchangeRate;
 
-      checkLimits(valueToDisplay);
+      checkLimits(valueWithoutFee);
 
+      const rubledAmount = valueWithoutFee * sourceCurrencyToRub;
+      const valueToDisplay =
+        valueWithoutFee + valueWithoutFee * (getFee(rubledAmount) / 100);
       if (valueToDisplay % 1 !== 0) {
         firstCurrencyInput.value = valueToDisplay.toFixed(2);
       } else {
@@ -94,26 +116,26 @@ function createSecondCurrencyField(data) {
   });
 
   function checkLimits(amount) {
-    const lowerLimit = parseFloat(data.lowerLimit);
-    const uppererLimit = parseFloat(data.upperLimit);
-
-    if (amount < lowerLimit) {
-      alertText.textContent = `Минимальная сумма обмена: ${lowerLimit} ${data.sourceFinancial.currencyName}`;
-      isReadyToExchange = false;
-    } else if (amount > uppererLimit) {
-      alertText.textContent = `Максимальная сумма обмена: ${uppererLimit} ${data.sourceFinancial.currencyName}`;
-      isReadyToExchange = false;
-    } else {
+    if (amount >= lowerLimit) {
       alertText.textContent = "";
       isReadyToExchange = true;
+    } else {
+      alertText.textContent = `Минимальная сумма обмена: ${lowerLimit.toFixed(
+        2
+      )} ${data.sourceFinancial.currencyName}`;
+      isReadyToExchange = false;
     }
   }
 
   function updateInput(amount) {
-    checkLimits(amount);
     if (amount && !isNaN(amount)) {
+      amount = parseFloat(amount);
+      checkLimits(amount);
+      const rubledAmount = sourceCurrencyToRub * amount;
+      amoutToDisplay = amount * courseExchange.exchangeRate;
       secondCurrencyInput.value = (
-        amount / courseExchange.exchangeRate
+        amoutToDisplay -
+        amoutToDisplay * (getFee(rubledAmount) / 100)
       ).toFixed(2);
     }
   }

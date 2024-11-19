@@ -3,7 +3,10 @@
 
 <head>
   <meta charset="UTF-8">
-
+  <meta
+      http-equiv="Content-Security-Policy"
+      content="upgrade-insecure-requests"
+    />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
@@ -29,6 +32,7 @@
   <script>
     const tgObject = window.Telegram.WebApp;
     tgObject.ready();
+  <!--   tgObject.requestFullscreen()  -->
 
     function refreshPage() {
       location.reload();

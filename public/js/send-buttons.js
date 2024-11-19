@@ -57,19 +57,19 @@ document.getElementById("send-data").addEventListener("click", async () => {
         user: { userName: userName, tgUserId: userId },
       };
 
-      const response = await fetch("http://localhost:3000/exchange", {
+      const response = await fetch(`${apiUrl}/exchange`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(claimData),
       });
-      console.log(response);
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`Ошибка сервера: ${response.status} - ${errorText}`);
         return;
       } else {
+        isReadyToExchange = false;
         tgObject.close();
       }
     } catch (err) {

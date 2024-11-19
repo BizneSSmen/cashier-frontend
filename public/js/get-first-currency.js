@@ -14,10 +14,15 @@ async function changeCurrency(currentCurrencyId, type) {
     data.forEach((item) => {
       const card = createCurrencyCard(item);
       card.setAttribute("financial-id", `${item.id}`);
-      card.setAttribute("data-bs-dismiss", "offcanvas");
-      card.addEventListener("click", () => {
-        loadFirstAndSecondCurrency(item.id);
+      card.addEventListener("click", async () => {
+        await loadFirstAndSecondCurrency(item.id);
+        const offCanvasElement = document.getElementById("offcanvasBottom");
+        const offCanvas = bootstrap.Offcanvas.getInstance(offCanvasElement);
+        if (offCanvas) {
+          offCanvas.hide();
+        }
       });
+
       card.addEventListener("click", () => {
         setActiveButton(
           document.getElementById("second-currency-group-all"),

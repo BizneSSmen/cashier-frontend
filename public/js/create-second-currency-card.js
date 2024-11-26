@@ -96,7 +96,11 @@ function createSecondCurrencyCard(data) {
     isSecondCurrencySelected = true;
     createSecondCurrencyField(data);
     toggleSwapButton(true);
-    toggleSendButtons(true);
+    tgObject.SecondaryButton.text = "Назад к списку валют";
+    tgObject.SecondaryButton.offClick(openBot);
+    tgObject.SecondaryButton.onClick(resetgroupButtons);
+    tgObject.SecondaryButton.onClick(backToCurrencies);
+    tgObject.MainButton.show();
     toggleSecondCurrencyTypeButtons(false);
     toggleOffcanvas(false);
   });

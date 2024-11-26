@@ -26,8 +26,6 @@ async function createSecondCurrencyField(data) {
   const secondCurrencyHero = document.getElementById("second-currency-hero");
   secondCurrencyHero.textContent = "Что получу:";
 
-
-
   const card = createCurrencyCard(data.targetFinancial);
   card.id = "second-currency-card";
   card.setAttribute("financial-id", `${data.targetFinancial.id}`);
@@ -58,8 +56,8 @@ async function createSecondCurrencyField(data) {
   const secondCurrencyInput = document.createElement("input");
   secondCurrencyInput.id = "second-amount-input";
   secondCurrencyInput.type = "text";
-  secondCurrencyInput.maxLength = 7;
-  secondCurrencyInput.inputMode = "numeric";
+  secondCurrencyInput.maxLength = 14;
+  secondCurrencyInput.inputMode = "decimal";
   secondCurrencyInput.className = "form-control text-center m-0 p-0";
   secondCurrencyInput.placeholder = "0.0";
   secondCurrencyInput.setAttribute("autocomplete", "off");

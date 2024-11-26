@@ -26,14 +26,17 @@
     <?php include("./components/first-currency/index.php") ?>
     <?php include("./components/swap-button/index.php") ?>
     <?php include("./components/second-currency/index.php") ?>
-    <?php include("./components/send-buttons/index.php") ?>
+ 
   </div>
 
   <script>
     const tgObject = window.Telegram.WebApp;
     tgObject.ready();
-  <!--   tgObject.requestFullscreen()  -->
-
+    tgObject.disableVerticalSwipes();
+    tgObject.MainButton.text = 'Обменять';
+    tgObject.SecondaryButton.show()
+    tgObject.SecondaryButton.text = 'Бесплатная консультация';
+  
     function refreshPage() {
       location.reload();
     }

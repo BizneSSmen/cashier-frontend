@@ -17,7 +17,9 @@ async function loadSecondCurrencies(id, type) {
     console.log(data);
 
     data.forEach((item) => {
-      const card = createSecondCurrencyCard(item);
+      let card;
+      if (item.courseExchange) card = createSecondCurrencyCard(item);
+      else card = createForeignCard(item);
       secondCurrencyContainer.appendChild(card);
     });
   } catch (error) {

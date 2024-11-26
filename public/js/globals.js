@@ -1,9 +1,10 @@
 let isSecondCurrencySelected = false;
 let isReadyToExchange = false;
+let isReadyToExchangeForeign = false;
 let currencyExchangeData = {};
 let sourceCurrencyToRub = null;
 let targetCurrencyToRub = null;
 let minimum = null;
 let fees = null;
 const currencyTypes = ["all", "banks", "cash", "crypto", "foreign"];
-const apiUrl = "https://amraex.ru";
+const apiUrl = "http://localhost:3000";

@@ -6,6 +6,11 @@ async function createSecondCurrencyField(data) {
     return parseFloat(data.exchangeRate);
   };
 
+  const secondCurrencyContainer = document.getElementById(
+    "second-currency-container"
+  );
+  secondCurrencyContainer.innerHTML = "";
+
   currencyExchangeData = data;
   const { courseExchange, displayedCourseExchange } = data;
   const exchangeRate = parseFloat(courseExchange.exchangeRate).toFixed(3);
@@ -20,11 +25,6 @@ async function createSecondCurrencyField(data) {
 
   const secondCurrencyHero = document.getElementById("second-currency-hero");
   secondCurrencyHero.textContent = "Что получу:";
-
-  const secondCurrencyContainer = document.getElementById(
-    "second-currency-container"
-  );
-  secondCurrencyContainer.innerHTML = "";
 
   const card = createCurrencyCard(data.targetFinancial);
   card.id = "second-currency-card";
@@ -56,8 +56,8 @@ async function createSecondCurrencyField(data) {
   const secondCurrencyInput = document.createElement("input");
   secondCurrencyInput.id = "second-amount-input";
   secondCurrencyInput.type = "text";
-  secondCurrencyInput.maxLength = 7;
-  secondCurrencyInput.inputMode = "numeric";
+  secondCurrencyInput.maxLength = 14;
+  secondCurrencyInput.inputMode = "decimal";
   secondCurrencyInput.className = "form-control text-center m-0 p-0";
   secondCurrencyInput.placeholder = "0.0";
   secondCurrencyInput.setAttribute("autocomplete", "off");

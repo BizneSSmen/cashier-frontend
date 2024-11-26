@@ -1,20 +1,19 @@
-function toggleSendButtons(enable) {
-  const sendButtonsContainer = document.getElementById(
-    "send-buttons-container"
+function resetgroupButtons() {
+  setActiveButton(
+    document.getElementById("second-currency-group-all"),
+    currencyTypes,
+    "second-currency-group-"
   );
-  if (enable) {
-    sendButtonsContainer.classList.remove("d-none");
-  } else {
-    sendButtonsContainer.classList.add("d-none");
-  }
 }
 
-const backButton = document.getElementById("to-currencies");
-
-backButton.addEventListener("click", () => {
+function backToCurrencies() {
+  tgObject.SecondaryButton.offClick(resetgroupButtons);
+  tgObject.SecondaryButton.offClick(backToCurrencies);
+  tgObject.SecondaryButton.onClick(openBot);
+  tgObject.SecondaryButton.text = "Бесплатная консультация";
+  tgObject.MainButton.hide();
   isSecondCurrencySelected = false;
   currencyExchangeData = {};
-  toggleSendButtons(false);
   toggleSwapButton(false);
   toggleOffcanvas(true);
   toggleSecondCurrencyTypeButtons(true);
@@ -22,17 +21,9 @@ backButton.addEventListener("click", () => {
     .getElementById("first-currency-card")
     .getAttribute("financial-id");
   loadSecondCurrencies(firstCurrencyId);
-});
+}
 
-backButton.addEventListener("click", () => {
-  setActiveButton(
-    document.getElementById("second-currency-group-all"),
-    currencyTypes,
-    "second-currency-group-"
-  );
-});
-
-document.getElementById("send-data").addEventListener("click", async () => {
+async function makeClaim() {
   if (isReadyToExchange) {
     try {
       const { currencyName: firstCurrencyName } =
@@ -57,23 +48,50 @@ document.getElementById("send-data").addEventListener("click", async () => {
         user: { userName: userName, tgUserId: userId },
       };
 
-      const response = await fetch("http://localhost:3000/exchange", {
+      const response = await fetch(`${apiUrl}/exchange`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(claimData),
       });
-      console.log(response);
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`Ошибка сервера: ${response.status} - ${errorText}`);
+        if (response.status == 403) {
+          tgObject.showPopup(
+            {
+              title: "Ошибка",
+              message: "Для формирования заявки запустите бота.",
+            },
+            () => {}
+          );
+        }
         return;
       } else {
-        tgObject.close();
+        isReadyToExchange = false;
+        tgObject.showPopup(
+          {
+            title: "Успешно",
+            message:
+              "Ваша заявка успешно отправлена.\nОжидайте ответа в чате бота.",
+          },
+          () => {
+            tgObject.openTelegramLink("https://t.me/amra_exchange_bot");
+            tgObject.close();
+          }
+        );
       }
     } catch (err) {
-      console.error("Ошибка при отправке данных:", err);
+      console.error("Ошибка пи отправке данных:", err);
     }
   }
-});
+}
+
+async function openBot() {
+  tgObject.openTelegramLink("https://t.me/amra_exchange_bot");
+  tgObject.close();
+}
+
+tgObject.MainButton.onClick(makeClaim);
+tgObject.SecondaryButton.onClick(openBot);

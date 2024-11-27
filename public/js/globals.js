@@ -7,4 +7,4 @@ let targetCurrencyToRub = null;
 let minimum = null;
 let fees = null;
 const currencyTypes = ["all", "banks", "cash", "crypto", "foreign"];
-const apiUrl = "http://localhost:3000";
+const apiUrl = "https://amraex.ru";

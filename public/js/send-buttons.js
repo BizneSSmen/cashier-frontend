@@ -7,6 +7,7 @@ function resetgroupButtons() {
 }
 
 function backToCurrencies() {
+  tgObject.BackButton.hide();
   tgObject.SecondaryButton.offClick(resetgroupButtons);
   tgObject.SecondaryButton.offClick(backToCurrencies);
   tgObject.SecondaryButton.onClick(openBot);
@@ -51,7 +52,7 @@ async function makeClaim() {
             financialName: secondCurrencyName,
             amount: secondAmount,
           },
-          user: { userName, tgUserId: userId },
+          user: { userName: userName, tgUserId: userId },
         };
 
         response = await fetch(`${apiUrl}/exchange`, {
@@ -103,7 +104,7 @@ async function handleResponse(response) {
           title: "Ошибка",
           message: "Для формирования заявки запустите бота.",
         },
-        () => {}
+        () => { }
       );
     }
     return;

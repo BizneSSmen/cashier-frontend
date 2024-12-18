@@ -36,7 +36,9 @@ async function createSecondCurrencyField(data) {
       ? `
       <p class="hint_color fs-14">
           1 ${courseExchange.targetCurrency.code} =
-          <span class="gold-color">${displayedCourseExchangeRate} ${courseExchange.sourceCurrency.name}</span>
+          <span class="gold-color">${parseFloat(
+            Math.pow(courseExchange.exchangeRate, -1)
+          ).toFixed(3)} ${courseExchange.sourceCurrency.name}</span>
       </p>
   `
       : `

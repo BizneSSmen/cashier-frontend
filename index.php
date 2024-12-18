@@ -32,14 +32,16 @@
     const tgObject = window.Telegram.WebApp;
     tgObject.ready();
     tgObject.disableVerticalSwipes();
+    tgObject.expand()
     tgObject.MainButton.text = 'Обменять';
     tgObject.SecondaryButton.show()
+    tgObject.SecondaryButton.textColor = tgObject.themeParams.link_color;
     tgObject.SecondaryButton.text = 'Бесплатная консультация';
 
     function refreshPage() {
       location.reload();
     }
-    setInterval(refreshPage, 150000);
+    setInterval(refreshPage, 450000);
   </script>
 
   <script src="./public/js/globals.js?v=<?= time() ?>"></script>

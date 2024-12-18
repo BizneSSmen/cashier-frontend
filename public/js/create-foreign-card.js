@@ -25,10 +25,13 @@ function earse(data) {
   currencyExchangeData = data;
   toggleSecondCurrencyTypeButtons(false);
   tgObject.SecondaryButton.text = "Назад к списку валют";
+  tgObject.BackButton.onClick(resetgroupButtons);
+  tgObject.BackButton.onClick(backToCurrencies);
   tgObject.SecondaryButton.offClick(openBot);
   tgObject.SecondaryButton.onClick(resetgroupButtons);
   tgObject.SecondaryButton.onClick(backToCurrencies);
   tgObject.MainButton.show();
+  tgObject.BackButton.show();
 
   isReadyToExchangeForeign = true;
 

@@ -16,12 +16,15 @@ function createSecondCurrencyCard(data) {
     exchangeRate < 1
       ? `
       <div class="d-flex align-items-center">
-      <img src="../../static/icons/${targetFinancial.currencyName}.svg" class="me-2 logo-mini"></img>
+      <img src="../../static/icons/${targetFinancial.currencyName
+      }.svg" class="me-2 logo-mini"></img>
       <p class="hint_color fs-14">${targetFinancial.currencyName}</p>
       </div>
       <p class="hint_color fs-14">
           1 ${courseExchange.targetCurrency.code} =
-          <span class="text-end gold-color">${displayedExchangeRate} ${courseExchange.sourceCurrency.name}</span>
+          <span class="text-end gold-color">${parseFloat(
+        Math.pow(courseExchange.exchangeRate, -1).toFixed(3)
+      )} ${courseExchange.sourceCurrency.name}</span>
       </p>
   `
       : `
@@ -96,7 +99,10 @@ function createSecondCurrencyCard(data) {
     isSecondCurrencySelected = true;
     createSecondCurrencyField(data);
     toggleSwapButton(true);
-    tgObject.SecondaryButton.text = "Назад к списку валют";
+    tgObject.SecondaryButton.text = "Список валют";
+    tgObject.BackButton.show()
+    tgObject.BackButton.onClick(resetgroupButtons);
+    tgObject.BackButton.onClick(backToCurrencies);
     tgObject.SecondaryButton.offClick(openBot);
     tgObject.SecondaryButton.onClick(resetgroupButtons);
     tgObject.SecondaryButton.onClick(backToCurrencies);
